@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGVentas.GestionUsuarios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace SGVentas
     /// </summary>
     public partial class MainWindow : Window
     {
+        internal Usuario Sesion;
         public MainWindow()
         {
             InitializeComponent();
