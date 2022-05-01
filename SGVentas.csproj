@@ -109,7 +109,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ControladorBDG.cs" />
+    <Compile Include="ControlBDG.cs" />
     <Compile Include="CotizacionRecibo\DetalleRecibo.cs" />
     <Compile Include="CotizacionRecibo\SolicitudRecibo.cs" />
     <Compile Include="GestionClientes\Cliente.cs" />
@@ -119,6 +119,7 @@
     <Compile Include="GestionEmpleados\Empleado.cs" />
     <Compile Include="GestionMateriales\Material.cs" />
     <Compile Include="GestionProductos\Producto.cs" />
+    <Compile Include="GestionUsuarios\AccionBitacora.cs" />
     <Compile Include="GestionUsuarios\Bitacora.xaml.cs">
       <DependentUpon>Bitacora.xaml</DependentUpon>
     </Compile>

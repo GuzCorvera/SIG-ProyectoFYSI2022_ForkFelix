@@ -17,9 +17,9 @@ namespace SGVentas.GestionUsuarios
     /// <summary>
     /// Lógica de interacción para Bitacora.xaml
     /// </summary>
-    public partial class Bitacora : Window
+    public partial class AccionBitacora : Window
     {
-        public Bitacora()
+        public AccionBitacora()
         {
             InitializeComponent();
         }
