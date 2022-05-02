@@ -1595,8 +1595,64 @@ namespace SGVentas
             cn.Close();
             return dt;
         }
-        
-        
+        /***************************************************************************************************************
+         * METODOS SISTEMA GERENCIAL 
+         * *******************************
+        ***************************************************************************************************************/
+
+        public List<Clases.ProdMasVendido> GenerarReporteProductosMVendidos(string fechaIni, string fechaFini)
+        {
+            List<Clases.ProdMasVendido> dt = new List<Clases.ProdMasVendido>();
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter();
+            try
+            {
+                cn.Open();
+                SQLiteCommand comando = new SQLiteCommand("SELECT d.COD_MATERIAL as CODIGO," +
+                    " SUM(d.CANTIDAD_DETALLE) as CANTIDAD, m.NOMBRE_MATERIAL ||' DE '|| m.UNIDAD_MEDIDA_MATERIAL as PRODUCTOS," +
+                    " s.FECHA_SOLICITUD AS FECHA " +
+                    "FROM DETALLE_SOLICITUD_INSUMO AS d INNER JOIN SOLICITUD_INSUMO AS s INNER JOIN MATERIAL as m" +
+                    " ON d.COD_SOLICITUD = s.COD_SOLICITUD AND d.COD_MATERIAL = m.COD_MATERIAL AND s.ESTADO_SOLICITUD = 'Aprobado'" +
+                    " AND substr(s.FECHA_SOLICITUD, 7) || substr(s.FECHA_SOLICITUD, 4, 2) || substr(s.FECHA_SOLICITUD, 1, 2)  between @inicio and @fin " +
+                    "GROUP by m.COD_MATERIAL" +
+                    " UNION " +
+                    "SELECT d.COD_MATERIAL AS CODIGO," +
+                    " SUM(d.CANTIDAD_DETALLE) as CANTIDAD, p.NOMBRE_PRODUCTO || ' DE ' || p.UNIDAD_MEDIDA_PRODUCTO as PRODUCTOS," +
+                    " s.FECHA_SOLICITUD as FECHA" +
+                    " FROM DETALLE_SOLICITUD_INSUMO AS d INNER JOIN SOLICITUD_INSUMO AS s INNER JOIN PRODUCTO as p" +
+                    " ON d.COD_SOLICITUD = s.COD_SOLICITUD AND d.COD_MATERIAL = P.COD_PRODUCTO AND s.ESTADO_SOLICITUD = 'Aprobado'" +
+                    " AND substr(s.FECHA_SOLICITUD, 7) || substr(s.FECHA_SOLICITUD, 4, 2) || substr(s.FECHA_SOLICITUD, 1, 2)  between @inicio and @fin " +
+                    "GROUP by p.COD_PRODUCTO", cn);
+                comando.Parameters.Add(new SQLiteParameter("@inicio", fechaIni));
+                comando.Parameters.Add(new SQLiteParameter("@fin", fechaFini));
+                
+                SQLiteDataReader sqlReader = comando.ExecuteReader();
+                while (sqlReader.Read())
+                {
+                    //Agregando tipos de usuario a lista de datos
+                    dt.Add(new Clases.ProdMasVendido(sqlReader["PRODUCTOS"].ToString(), Convert.ToSingle(sqlReader["CANTIDAD"].ToString())));
+                }
+                sqlReader.Close();
+
+
+            }
+
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show("Ha ocurrido un error al generar el reporte\n " + ex.Message.ToString());
+                Console.WriteLine();
+                cn.Close();
+            }
+            cn.Close();
+            return dt;
+
+
+            
+        }
+
+
+
+
+
         /***************************************************************************************************************
          * A CONTINUACION SE PRESENTAN DIFERENTES METODOS DE BUSQUEDA PARA BUSCAR RECIBOS*******************************
         ***************************************************************************************************************/

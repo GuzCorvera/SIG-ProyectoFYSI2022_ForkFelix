@@ -123,6 +123,67 @@ namespace SGVentas
 
             return dataTable;
         }
+        public List<Clases.ProdMasVendido> ConsultarDetallesReportePMV(string codReporte)
+        {
+            List<Clases.ProdMasVendido> dataTable = new List<Clases.ProdMasVendido>();
+            string sentenciaSQL = "SELECT * FROM PRODUCTO_MAS_VENDIDO WHERE COD_REPORTE='" + codReporte + "'";
+            try
+            {
+                cn.Open();
+                Console.WriteLine(DateTime.Now.ToString());
+                SQLiteCommand adapter = new SQLiteCommand(sentenciaSQL, cn);
+
+                SQLiteDataReader sqlReader = adapter.ExecuteReader();
+                while (sqlReader.Read())
+                {
+                    //Agregando tipos de usuario a lista de datos
+                    dataTable.Add(new Clases.ProdMasVendido(sqlReader["PRODUCTOS"].ToString(), Convert.ToSingle(sqlReader["CANTIDAD"].ToString())));
+                }
+                sqlReader.Close();
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show("Ha ocurrido un error al cargar tabla de reportes de productos mas vendidos "+ ex.Message.ToString());
+                Console.WriteLine();
+                cn.Close();
+            }
+            cn.Close();
+        
+
+            return dataTable;
+        }
+        public string AgregarReportePMV(List<Clases.ProdMasVendido> pmvd)
+        {// Este metodo puede ser usado por todos, menos por el reporte de
+            //por empresa
+            
+                cn.Open();
+            foreach(Clases.ProdMasVendido pmv in pmvd) {
+                try
+                {
+                    SQLiteCommand comando = new SQLiteCommand("INSERT INTO PRODUCTO_MAS_VENDIDO" +
+                        " (COD_PRODUCTO_VENDIDO, COD_REPORTE,NOM_PRODUCTO_VENDIDO, CANT_PROD_VENDIDO) " +
+                        "VALUES (@id,@idRepo,@nombre,@cant)", cn);
+
+                    comando.Parameters.Add(new SQLiteParameter("@id", pmv.codigo));
+                    comando.Parameters.Add(new SQLiteParameter("@idRepo", pmv.codigoReporte));
+                    comando.Parameters.Add(new SQLiteParameter("@nombre", pmv.nombreProducto));
+                    comando.Parameters.Add(new SQLiteParameter("@cant", pmv.cantidadProducto));
+
+
+                    comando.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    cn.Close();
+                    return "Ha ocurrido el error: " + ex.Message.ToString() + "Al intentar crear el Reporte";
+                }
+            }
+                
+               
+            
+            cn.Close();
+            return "1";
+        }
 
     }
 }

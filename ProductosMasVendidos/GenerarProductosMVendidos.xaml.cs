@@ -64,7 +64,7 @@ namespace SGVentas.ProductosMasVendidos
                         reporte.fechaFinal = dateFinal.SelectedDate.Value;
                         ControlBDG control = new ControlBDG();
                         control.AgregarReporte(reporte);
-                        ConsultarReporteAntiguo consultar = new ConsultarReporteAntiguo(nombreEmpleado, reporte.codigo);
+                        ConsultarReporteAntiguo consultar = new ConsultarReporteAntiguo(nombreEmpleado, reporte.codigo, reporte.fechaInicial,reporte.fechaFinal, "Nuevo");
                         consultar.ShowDialog();
                     }
                 }
@@ -103,7 +103,7 @@ namespace SGVentas.ProductosMasVendidos
             DataRowView repor = dataReportes.SelectedItem as DataRowView;
             if (repor != null && grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
             {
-                ConsultarReporteAntiguo detail = new ConsultarReporteAntiguo(repor.Row.ItemArray[2].ToString(), repor.Row.ItemArray[0].ToString());
+                ConsultarReporteAntiguo detail = new ConsultarReporteAntiguo(repor.Row.ItemArray[2].ToString(), repor.Row.ItemArray[0].ToString(), Convert.ToDateTime(repor.Row.ItemArray[4].ToString()), Convert.ToDateTime(repor.Row.ItemArray[5].ToString()));
                 detail.ShowDialog();
 
             }
