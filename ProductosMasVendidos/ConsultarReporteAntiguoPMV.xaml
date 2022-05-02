@@ -33,9 +33,9 @@
 
         <DataGrid x:Name="dataReporte" ItemsSource="{Binding}" AlternatingRowBackground="#FFEA4A4A" AlternationCount="2" Margin="205,240,23,49" BorderThickness="0" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn MinWidth="100" Header="Codigo" Binding="{Binding COD_USUARIO}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="160" Header="Producto" Binding="{Binding CORREO_USUARIO}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="150" Header="Cantidad" Binding="{Binding COD_TIPOUSUARIO}" IsReadOnly="True"/>
+                
+                <DataGridTextColumn MinWidth="160" Header="Producto" Binding="{Binding PRODUCTOS}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="150" Header="Cantidad" Binding="{Binding CANTIDAD}" IsReadOnly="True"/>
 
 
             </DataGrid.Columns>
