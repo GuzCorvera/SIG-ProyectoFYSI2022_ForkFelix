@@ -328,7 +328,7 @@ namespace SGVentas
             if (paginasRestantes == 1)
             {
                 prueba =MergedFlowDoc(paginas);
-                OrdenarImpresion( prueba);
+                OrdenarImpresion( prueba, "Impresion Historial");
                 Console.Write("Entró");
             }
             Console.Write("Pasó");
@@ -336,7 +336,7 @@ namespace SGVentas
         }
        
         
-            public void OrdenarImpresion( FlowDocument doc)
+            public void OrdenarImpresion( FlowDocument doc, string tipo)
         {
           //  FlowDocument document=new FlowDocument();
            
@@ -365,7 +365,7 @@ namespace SGVentas
             if (printDialog.ShowDialog() ?? false)
             {
                 // Llamar a PrintDocument para la ventana de impresión
-                printDialog.PrintDocument(idpSrc.DocumentPaginator, "Impresión de Historial");
+                printDialog.PrintDocument(idpSrc.DocumentPaginator, tipo);
             }
 
         }
@@ -676,5 +676,107 @@ namespace SGVentas
                 printDialog.PrintDocument(idpSrc.DocumentPaginator, "Impresión de Cotización");
             }
         }
+        // Crea una impresión de la bitacora de acciones del sistema gerencial.
+        // AUTOR: Gabriel 
+        public void ImprimirBitacora(DataTable dataTable, string administrador, string fecha, int paginasRestantes)
+        {
+            // Preparando impresión por medio de FlowDocument
+
+            FlowDocument todo = new FlowDocument();
+            Table tableEmpresa = new Table();
+            // todo.MinPageHeight = 982.7;
+            todo.PageHeight = 982.7;
+
+            todo.Blocks.Add(tableEmpresa);
+            tableEmpresa.Background = System.Windows.Media.Brushes.White;
+            tableEmpresa.Columns.Add(new TableColumn());
+            tableEmpresa.RowGroups.Add(new TableRowGroup());
+            tableEmpresa.RowGroups[0].Rows.Add(new TableRow());
+            TableRow emp = tableEmpresa.RowGroups[0].Rows[0];
+            // Agregando logo de la empresa
+            BitmapImage bmp = new BitmapImage(new Uri("/Images/fysi.jpg", UriKind.Relative));
+            System.Windows.Controls.Image logo = new System.Windows.Controls.Image { Source = bmp };
+            logo.Width = 160;
+            logo.Height = 98;
+            emp.Cells.Add(new TableCell(new BlockUIContainer(logo)));
+            // Agregando nombre de la empresa
+            System.Windows.Documents.Paragraph p = new System.Windows.Documents.Paragraph(new Run("\nFuego y Seguridad Industrial\n"));
+            p.Inlines.Add(new Run("Bitacora del Sistema"));
+            p.FontSize = 20;
+            emp.Cells.Add(new TableCell(p));
+
+            // Construcción de tabla de cabecera
+            Table tableCabecera = new Table();
+            todo.Blocks.Add(tableCabecera);
+            tableCabecera.Background = System.Windows.Media.Brushes.White;
+            for (int i = 0; i < 2; i++)
+            {
+                tableCabecera.Columns.Add(new TableColumn());
+            }
+            // Información de orden
+            tableCabecera.RowGroups.Add(new TableRowGroup());
+            tableCabecera.RowGroups[0].Rows.Add(new TableRow());
+            TableRow actual = tableCabecera.RowGroups[0].Rows[0];
+            actual.FontSize = 14;
+            actual.Cells.Add(new TableCell(new System.Windows.Documents.Paragraph(new Run("Fecha de impresion: " + fecha))));
+            //   actual.Cells.Add(new TableCell(new System.Windows.Documents.Paragraph(new Run("Orden #" + numeroOrden))));
+            // Información de cliente y razón social
+            tableCabecera.RowGroups[0].Rows.Add(new TableRow());
+            actual = tableCabecera.RowGroups[0].Rows[1];
+            actual.FontSize = 14;
+            actual.Cells.Add(new TableCell(new System.Windows.Documents.Paragraph(new Run("Impreso Por: " + administrador))));
+            
+ 
+            
+
+            // Tabla de detalles
+            Table tableDetalles = new Table();
+            todo.Blocks.Add(tableDetalles);
+            tableDetalles.Background = System.Windows.Media.Brushes.White;
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                tableDetalles.Columns.Add(new TableColumn());
+            }
+            tableDetalles.RowGroups.Add(new TableRowGroup());
+            // Creación de encabezado
+            tableDetalles.RowGroups[0].Rows.Add(new TableRow());
+            actual = tableDetalles.RowGroups[0].Rows[0];
+            actual.FontSize = 12;
+            actual.FontWeight = FontWeights.Bold;
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                actual.Cells.Add(new TableCell(new System.Windows.Documents.Paragraph(new Run(dataTable.Columns[i].ColumnName))));
+            }
+            // Agregando información
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                tableDetalles.RowGroups[0].Rows.Add(new TableRow());
+                actual = tableDetalles.RowGroups[0].Rows[i + 1];
+                actual.FontSize = 12;
+                actual.FontWeight = FontWeights.Regular;
+                for (int j = 0; j < dataTable.Columns.Count; j++)
+                {
+                    actual.Cells.Add(new TableCell(new System.Windows.Documents.Paragraph(new Run(dataTable.Rows[i][j].ToString()))));
+                }
+            }
+            // Salto de línea
+            p = new System.Windows.Documents.Paragraph(new Run("\n"));
+            todo.Blocks.Add(p);
+
+            Console.Write(paginasRestantes.ToString());
+            paginas.Add(todo);
+            if (paginasRestantes == 1)
+            {
+                prueba = MergedFlowDoc(paginas);
+                OrdenarImpresion(prueba, "Impresion de Bitacora");
+                
+            }
+           
+
+        }
+
+
+       
+
     }
 }

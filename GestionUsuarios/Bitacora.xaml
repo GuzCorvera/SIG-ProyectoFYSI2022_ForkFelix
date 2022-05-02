@@ -12,13 +12,13 @@
         <Label Content="Bitacora de acciones" HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" FontSize="22" FontFamily="Comic Sans MS" FontWeight="Bold" Foreground="White" Height="39"/>
         <Rectangle Fill="#FFFFFFFF" Margin="195,100,10,10" Stroke="Black"/>
         <Rectangle Fill="#FFF1EBEC" HorizontalAlignment="Left" Margin="19,100,0,0" Stroke="Black" Width="160" Height="324" VerticalAlignment="Top"/>
-        <Button Background="#FFF1EBEC" x:Name="btnImprimir"  HorizontalAlignment="Left" Margin="50,112,0,0" VerticalAlignment="Top" Width="100" Height="100" BorderThickness="0">
+        <Button Background="#FFF1EBEC" x:Name="btnImprimir"  HorizontalAlignment="Left" Margin="50,112,0,0" VerticalAlignment="Top" Width="100" Height="100" BorderThickness="0" Click="btnImprimir_Click">
             <StackPanel Height="100" Width="90">
                 <Image Name="imgAgregar" Source="/Images/impresora.png" Height="70" Width="70" Cursor="Hand"></Image>
                 <Label Name="labelAgregar" Content="Imprimir" HorizontalAlignment="Center" FontFamily="Comic Sans MS"/>
             </StackPanel>
         </Button>
-        <Button Background="#FFF1EBEC" Name="btnExportar" HorizontalAlignment="Left" Margin="50,222,0,0" VerticalAlignment="Top" Width="100" Height="100" BorderThickness="0">
+        <Button Background="#FFF1EBEC" Name="btnExportar" HorizontalAlignment="Left" Margin="50,222,0,0" VerticalAlignment="Top" Width="100" Height="100" BorderThickness="0" Click="btnExportar_Click">
             <StackPanel Height="100" Width="90">
                 <Image Name="imgBorrar" Source="/Images/excel.png" Height="70" Width="70" Cursor="Hand"></Image>
                 <Label Name="labelBorrar" Content="Exportar" HorizontalAlignment="Center" FontFamily="Comic Sans MS"/>
@@ -31,11 +31,11 @@
             </StackPanel>
         </Button>
 
-        <DataGrid x:Name="dataUsuarios" ItemsSource="{Binding}" AlternatingRowBackground="#FFEA4A4A" AlternationCount="2" Margin="205,112,23,49" BorderThickness="0" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataAcciones" ItemsSource="{Binding}" AlternatingRowBackground="#FFEA4A4A" AlternationCount="2" Margin="205,112,23,49" BorderThickness="0" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn MinWidth="100" Header="Usuario" Binding="{Binding COD_USUARIO}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="160" Header="Acción" Binding="{Binding CORREO_USUARIO}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="150" Header="Fecha de Ejecución" Binding="{Binding COD_TIPOUSUARIO}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="Usuario" Binding="{Binding EMPLEADO_BITACORA}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="160" Header="Acción" Binding="{Binding NOMBRE_REPORTE_BITACORA}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="150" Header="Fecha de Ejecución" Binding="{Binding FECHA_BITACORA, StringFormat='dd/MM/yyyy'}" IsReadOnly="True"/>
                 
                 
             </DataGrid.Columns>

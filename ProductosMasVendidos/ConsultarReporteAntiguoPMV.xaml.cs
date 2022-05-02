@@ -19,9 +19,14 @@ namespace SGVentas.ProductosMasVendidos
     /// </summary>
     public partial class ConsultarReporteAntiguo : Window
     {
-        public ConsultarReporteAntiguo()
+        public string nombreEmpleado { get; set; }
+        public string codReporte { get; set; }
+        public ConsultarReporteAntiguo(string nombre, string codigoRepo)
         {
             InitializeComponent();
+            nombreEmpleado = nombre;
+            codReporte = codigoRepo;
+            
         }
 
         private void BtnVolver_Click(object sender, RoutedEventArgs e)

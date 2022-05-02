@@ -23,8 +23,9 @@ namespace SGVentas.GestionUsuarios
             this.fechaActual= fecha;
         }
         //registra la accion en la BD solo se tiene que llamar la funcion y pasar los paramentros
-        public void RegistrarAcccion(string codigo, string nombreEmpledo, string accion, DateTime fecha)
+        public void RegistrarAcccion(string nombreEmpledo, string accion, DateTime fecha)
         {
+            string codigo = GenerarCodigoS();
             AccionBitacora accion1 = new AccionBitacora(codigo, nombreEmpledo, accion, fecha);
             ControlBDG control = new ControlBDG();
             string resulado=control.AgregarAccionABitacora(accion1);
@@ -34,7 +35,22 @@ namespace SGVentas.GestionUsuarios
 
             }
         }
-        
+        public string GenerarCodigoS()
+        {
+            DateTime fecha = DateTime.Now;
+            string anio = fecha.Year.ToString();
+            string mes = fecha.Month.ToString();
+            string dia = fecha.Day.ToString();
+            string hora = fecha.Hour.ToString();
+            string min = fecha.Minute.ToString();
+            string seg = fecha.Second.ToString();
+
+            return dia + mes + anio + hora + min + seg;
+
+
+        }
+
+
 
     }
 }
