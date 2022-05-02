@@ -12,7 +12,7 @@
         <Label Content="Generar Reporte de Productos Más Vendidos" HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" FontSize="22" FontFamily="Comic Sans MS" FontWeight="Bold" Foreground="White" Height="39"/>
         <Rectangle Fill="#FFFFFFFF" Margin="195,200,10,10" Stroke="Black"/>
         <Rectangle Fill="#FFF1EBEC" HorizontalAlignment="Left" Margin="19,100,0,0" Stroke="Black" Width="160" Height="242" VerticalAlignment="Top"/>
-        <Button Background="#FFF1EBEC" x:Name="btnImprimir"  HorizontalAlignment="Left" Margin="50,112,0,0" VerticalAlignment="Top" Width="100" Height="100" BorderThickness="0">
+        <Button Background="#FFF1EBEC" x:Name="btnGenerar"  HorizontalAlignment="Left" Margin="50,112,0,0" VerticalAlignment="Top" Width="100" Height="100" BorderThickness="0" Click="btnGenerar_Click">
             <StackPanel Height="100" Width="90">
                 <Image Name="imgAgregar" Source="/Images/solicitud.png" Height="70" Width="70" Cursor="Hand"></Image>
                 <Label Name="labelAgregar" Content="Generar" HorizontalAlignment="Center" FontFamily="Comic Sans MS"/>
@@ -25,11 +25,11 @@
             </StackPanel>
         </Button>
 
-        <DataGrid x:Name="dataUsuarios" ItemsSource="{Binding}" AlternatingRowBackground="#FFEA4A4A" AlternationCount="2" Margin="205,217,24,49" BorderThickness="0" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataReportes" MouseDoubleClick="dgDetalles_MouseDoubleClick" ItemsSource="{Binding}" AlternatingRowBackground="#FFEA4A4A" AlternationCount="2" Margin="205,217,24,49" BorderThickness="0" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn MinWidth="100" Header="Usuario" Binding="{Binding COD_USUARIO}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="160" Header="Fecha Inicial" Binding="{Binding CORREO_USUARIO}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="150" Header="Fecha Final" Binding="{Binding COD_TIPOUSUARIO}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="150" Header="Nombre Empleado" Binding="{Binding EMPLEADO_REPORTE}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="160" Header="Fecha Inicial" Binding="{Binding FECHA_INICIAL}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="150" Header="Fecha Final" Binding="{Binding FECHA_FINAL}" IsReadOnly="True"/>
 
 
             </DataGrid.Columns>
@@ -39,7 +39,7 @@
         <TextBlock FontSize="14" x:Name="lblUsuario" HorizontalAlignment="Left" Margin="440,129,0,0" TextWrapping="Wrap" Text="Usuario:" VerticalAlignment="Top"/>
         <TextBlock FontSize="14" x:Name="lblFechaInicial" HorizontalAlignment="Left" Margin="205,165,0,0" TextWrapping="Wrap" Text="Fecha Incial:" VerticalAlignment="Top"/>
         <TextBlock FontSize="14" x:Name="lblFechaFinal" Margin="0,165,155,0" TextWrapping="Wrap" Text="Fecha Final:" VerticalAlignment="Top" HorizontalAlignment="Right" Width="76"/>
-        <DatePicker HorizontalAlignment="Left" Margin="285,162,0,0" VerticalAlignment="Top"/>
-        <DatePicker Margin="0,162,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="145"/>
+        <DatePicker x:Name="dateInicial" HorizontalAlignment="Left" Margin="285,162,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="dateFinal" Margin="0,162,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="145"/>
     </Grid>
 </Window>

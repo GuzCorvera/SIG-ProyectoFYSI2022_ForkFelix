@@ -109,6 +109,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Clases\ProdMasVendido.cs" />
+    <Compile Include="Clases\Reporte.cs" />
     <Compile Include="ControlBDG.cs" />
     <Compile Include="CotizacionRecibo\DetalleRecibo.cs" />
     <Compile Include="CotizacionRecibo\SolicitudRecibo.cs" />
